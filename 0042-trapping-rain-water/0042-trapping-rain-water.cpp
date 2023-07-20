@@ -1,24 +1,23 @@
 class Solution {
 public:
     int trap(vector<int>& height) {
-         int n = height.size();
-        vector<int> mxL(n);
-        vector<int> mxR(n);
-        vector<int> w(n);
-       
-        mxL[0] = height[0];
-        for(int i=1; i<n; i++){
-            mxL[i] = max(mxL[i-1],height[i]);
-        }
-        mxR[n-1] = height[n-1];
-        for(int i=n-2; i>=0; i--){
-            mxR[i] = max(mxR[i+1],height[i]);
-        }
-        int ans = 0;
-        for(int i=0; i<n; i++){
-            w[i] = min(mxL[i],mxR[i])-height[i];
-            ans += w[i];
-        }
-        return ans;
+      int total_water = 0;
+      int n = height.size();
+      vector<int> ngl(n);
+      vector<int> ngr(n);
+      vector<int> water(n);
+      ngl[0] = height[0];
+      for(int i=1; i<n; i++){
+        ngl[i] = max(ngl[i-1],height[i]);
+      }
+      ngr[n-1] = height[n-1];
+      for(int i=n-2; i>=0; i--){
+        ngr[i] = max(ngr[i+1],height[i]);
+      }
+      for(int i=0; i<n; i++){
+        water[i] = min(ngl[i],ngr[i]) - height[i];
+        total_water += water[i];
+      }
+      return total_water;
     }
 };
